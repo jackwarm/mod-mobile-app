@@ -22,7 +22,7 @@ class SortCards extends Component {
 	  this.props.goSort(newSort);
   }
   
-  // Display Search function
+  // Display Sort Request
   render() {
     return (
 		<div className='sortContainer'>

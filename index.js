@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import SearchCards from './components/SearchCards'
-import SortCards from './components/SortCards'
-import EditCard from './components/EditCard'
-import DisplayAllCards from './components/DisplayAllCards'
+import RefreshList from './components/RefreshList';
+import SearchCards from './components/SearchCards';
+import SortCards from './components/SortCards';
+import EditCard from './components/EditCard';
+import DisplayAllCards from './components/DisplayAllCards';
 import './style.css';
 
 const initialUserLength = 3;
@@ -114,17 +115,22 @@ class App extends Component {
     this.setState({users: this.fullList.users.sort((a,b) => this.sortCompare(sortInfo,a,b))});
   }
 
+  goRefresh = (newSize) => {
+    this.fetchListOfUsers(newSize);
+  }
+
   // Show the main page of the App
   render() {
     let action;
     if (this.enableEdit === true) {
-      action = <EditCard user={this.state.users[0]} saveCard={this.saveCard} cancelEdit={this.resetSearch}/>
+      action = <EditCard user={this.state.users[0]} saveCard={this.saveCard} cancelEdit={this.resetSearch} />
     } else {
       action = <DisplayAllCards users={this.state.users} editCard={this.editCard} />
     }
     return (
       <div>
-        <SearchCards goSearch={this.goSearch} resetSearch={this.resetSearch}/>
+        <RefreshList currentSize={this.state.maxUserList} goRefresh={this.goRefresh} />
+        <SearchCards goSearch={this.goSearch} resetSearch={this.resetSearch} />
         <SortCards goSort={this.goSort} />
         {action}
       </div>

@@ -98,6 +98,6 @@ img.cardPicture {
   padding-right: 3px;
 }
 
-.searchContainer, .sortContainer {
+.searchContainer, .sortContainer, fetchContainer {
   margin-bottom: 3px;
 }
