@@ -6,8 +6,8 @@ import EditCard from './components/EditCard'
 import DisplayAllCards from './components/DisplayAllCards'
 import './style.css';
 
-const requestUserLength = 100;
-const APIurl = 'https://randomuser.me/api/?results=' + requestUserLength;
+const initialUserLength = 3;
+const APIurl = 'https://randomuser.me/api/?results=';
 
 class App extends Component {
   enableEdit = false; // Flag to determine if the user info should be edited
@@ -17,13 +17,14 @@ class App extends Component {
 
     // Define the state of all users retrieved from API
     this.state = {
-	    users: []    
+	    users: [],
+      maxUserList: initialUserLength
     }
   }
 
-  // After Loading get a list of users to display. Save the full list for searching and reseting.
-  componentDidMount() {
-	  fetch(APIurl)
+  // Fetch the New List of users
+  fetchListOfUsers = (size) => {
+	  fetch(APIurl+size)
 	    .then(results => {
 	    	return(results.json());
 	    })
@@ -31,6 +32,11 @@ class App extends Component {
 	      this.setState({users:data.results});
 	    	this.fullList = Object.assign({}, this.state);
 	    });
+  }
+
+  // After Loading get a list of users to display. Save the full list for searching and reseting.
+  componentDidMount() {
+    this.fetchListOfUsers(this.state.maxUserList);
   }
 
   // Search the list for selected matches and reset the state to the found users.
@@ -106,7 +112,6 @@ class App extends Component {
   // Sort the list by the speficied field and direction
   goSort= (sortInfo) => {
     this.setState({users: this.fullList.users.sort((a,b) => this.sortCompare(sortInfo,a,b))});
-    this.findFieldValue(this.state.users[0],sortInfo);
   }
 
   // Show the main page of the App
