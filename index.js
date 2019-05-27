@@ -5,6 +5,7 @@ import SearchCards from './components/SearchCards';
 import SortCards from './components/SortCards';
 import EditCard from './components/EditCard';
 import DisplayAllCards from './components/DisplayAllCards';
+import LoadingDisplay from './components/LoadingDisplay';
 import './style.css';
 
 const initialUserLength = 3;
@@ -19,18 +20,20 @@ class App extends Component {
     // Define the state of all users retrieved from API
     this.state = {
 	    users: [],
-      maxUserList: initialUserLength
+      maxUserList: initialUserLength,
+      loading: {isLoading: true, loadingMessage:"Loading ..."}
     }
   }
 
   // Fetch the New List of users
-  fetchListOfUsers = (size) => {
+  fetchListOfUsers = (size) => {    
+	  this.setState({users:{},loading:{isLoading: true, loadingMessage:"Loading ..."}});
 	  fetch(APIurl+size)
 	    .then(results => {
 	    	return(results.json());
 	    })
 	    .then(data => {
-	      this.setState({users:data.results});
+	      this.setState({users:data.results,loading:{isLoading: false, loadingMessage:"Loading Complete ..."}});
 	    	this.fullList = Object.assign({}, this.state);
 	    });
   }
@@ -111,8 +114,11 @@ class App extends Component {
   }
 
   // Sort the list by the speficied field and direction
-  goSort= (sortInfo) => {
-    this.setState({users: this.fullList.users.sort((a,b) => this.sortCompare(sortInfo,a,b))});
+  goSort= (sortInfo) => {    
+	  this.setState({users:{},loading:{isLoading: true, loadingMessage:"Sorting ..."}});
+    this.setState({users: this.fullList.users.sort((a,b) => this.sortCompare(sortInfo,a,b)),
+                   loading:{isLoading: false, loadingMessage:"Sorting Complete..."}
+    });
   }
 
   goRefresh = (newSize) => {
@@ -132,6 +138,7 @@ class App extends Component {
         <RefreshList currentSize={this.state.maxUserList} goRefresh={this.goRefresh} />
         <SearchCards goSearch={this.goSearch} resetSearch={this.resetSearch} />
         <SortCards goSort={this.goSort} />
+        <LoadingDisplay loading={this.state.loading} />
         {action}
       </div>
     );

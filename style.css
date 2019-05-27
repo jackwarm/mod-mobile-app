@@ -101,3 +101,19 @@ img.cardPicture {
 .searchContainer, .sortContainer, fetchContainer {
   margin-bottom: 3px;
 }
+
+.loadingMessage {
+  color: black;
+  font-weight: bold;
+  font-size: 36px;
+  text-align: center;
+  padding-top: 30px;
+  animation-name: example;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes example {
+  from {color: black;}
+  to {color: white;}
+}
