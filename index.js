@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import SearchCards from './components/SearchCards'
+import SortCards from './components/SortCards'
 import EditCard from './components/EditCard'
 import DisplayAllCards from './components/DisplayAllCards'
 import './style.css';
@@ -18,7 +19,6 @@ class App extends Component {
     this.state = {
 	    users: []    
     }
-
   }
 
   // After Loading get a list of users to display. Save the full list for searching and reseting.
@@ -72,10 +72,42 @@ class App extends Component {
 		  }
 		  return(true);
 	  })]});
-	  this.fullList = Object.assign({}, this.state);
-	  this.enableEdit = false;
+	  this.resetSearch();
+  }
+  
+  // Get the specfic object within the user item for searching
+  findFieldValue = (item,sortInfo) => {
+    let fields = sortInfo.field.split(".");
+    let value = item[fields[0]];
+    for (let i=1; i<fields.length; i++) {
+      value = value[fields[i]];
+    }
+    return(value.toLowerCase());
   }
 
+  // Sort Comparison Function to sort the array of Users
+  sortCompare = (sortInfo,a, b) => {
+    const valueA = this.findFieldValue(a,sortInfo);
+    const genreB = this.findFieldValue(b,sortInfo);
+  
+    let comparison = 0;
+    if (valueA > genreB) {
+      comparison = 1;
+    } else if (valueA < genreB) {
+      comparison = -1;
+    }
+    // Reverse the Search direction
+    if (sortInfo.direction === '-') {
+      comparison *= -1;
+    }
+    return comparison;
+  }
+
+  // Sort the list by the speficied field and direction
+  goSort= (sortInfo) => {
+    this.setState({users: this.fullList.users.sort((a,b) => this.sortCompare(sortInfo,a,b))});
+    this.findFieldValue(this.state.users[0],sortInfo);
+  }
 
   // Show the main page of the App
   render() {
@@ -88,6 +120,7 @@ class App extends Component {
     return (
       <div>
         <SearchCards goSearch={this.goSearch} resetSearch={this.resetSearch}/>
+        <SortCards goSort={this.goSort} />
         {action}
       </div>
     );

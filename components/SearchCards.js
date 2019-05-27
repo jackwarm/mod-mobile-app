@@ -23,16 +23,18 @@ class SearchCards extends Component {
   // Display Search function
   render() {
     return (
-		<div className='searchContainer'>
-			<button className="btn_reset" onClick={this.resetDisplay} >Show All</button>
-    		<input type='text' 
+		<div className='searchContainer'>        
+      <span className="label" >Search: </span> 
+    	<input type='text' 
     			name='search' 
     			placeholder='Enter Text To Search' 
     			className='inputSearch'
     			value={this.state.search}
     			onChange={this.onChange}
     		/>
-    	</div>
+			<button className="btn" onClick={this.resetDisplay} >Show All</button>
+      <span className='note'>Searches Name,Location,Cell Number, and Email</span>
+    </div>
     );
   }
 }
