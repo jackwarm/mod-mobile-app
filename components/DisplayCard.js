@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import editIcon from './account-edit.png';
 
 export class DisplayCard extends Component {
   
@@ -15,7 +16,8 @@ export class DisplayCard extends Component {
     const displayLocation = this.modTitle(location.city) + ", " + this.modTitle(location.state);
     return (
         <div className="wholeCard">
-        <div className="cardEdit"><button className="btn_edit" onClick={this.props.editCard.bind(this, key)}>Edit</button></div>
+        <div className="cardEdit">
+        <button className="btn_edit" onClick={this.props.editCard.bind(this, key)}>Edit</button></div>
           <div className="cardName">{displayName}</div>
           <div className="cardImage"><img className='cardPicture' src={picture.large} alt={displayName} /></div>
           <div className="cardEmail">{email}</div>  

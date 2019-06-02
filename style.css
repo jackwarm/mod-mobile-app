@@ -23,11 +23,12 @@
 	width: 400px !important;
 }
 .cardEdit {
-    width: 10px;
-    position: absolute;
-    left: 20px;
-    top: 10px;
+  width: 10px;
+  position: absolute;
+  left: 20px;
+  top: 10px;
 	background-color: cornflowerblue;
+  background-image: url(./images/logo.png);
 }
 .cardName {
 	background-color: cornflowerblue;
