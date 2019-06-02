@@ -8,7 +8,7 @@ import DisplayAllCards from './components/DisplayAllCards';
 import LoadingDisplay from './components/LoadingDisplay';
 import './style.css';
 
-const initialUserLength = 5;
+const initialUserLength = 30;
 const APIurl = 'https://randomuser.me/api/?results=';
 
 class App extends Component {
