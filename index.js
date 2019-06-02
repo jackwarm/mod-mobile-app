@@ -7,6 +7,8 @@ import EditCard from './components/EditCard';
 import DisplayAllCards from './components/DisplayAllCards';
 import LoadingDisplay from './components/LoadingDisplay';
 import './style.css';
+//import iconEdit from "./icon-edit.svg";
+//import logo from './logo.svg';
 
 const initialUserLength = 5;
 const APIurl = 'https://randomuser.me/api/?results=';
@@ -135,6 +137,8 @@ class App extends Component {
     }
     return (
       <div>
+        <img src='{iconEdit}' />
+        <img src={logo} className="App-logo" alt="logo" />
         <RefreshList currentSize={this.state.maxUserList} goRefresh={this.goRefresh} />
         <SearchCards goSearch={this.goSearch} resetSearch={this.resetSearch} />
         <SortCards goSort={this.goSort} />
